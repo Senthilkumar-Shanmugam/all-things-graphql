@@ -33,7 +33,10 @@ public class Book {
         this.author = author;
     }
 
-    public Long getId() {
+    public Book() {
+	}
+
+	public Long getId() {
         return id;
     }
 
