@@ -3,6 +3,7 @@ package com.example.graphQLIntro.resolver;
 import java.util.Optional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import com.example.graphQLIntro.exception.BookNotFoundException;
 import com.example.graphQLIntro.model.Author;
 import com.example.graphQLIntro.model.Book;
 import com.example.graphQLIntro.repository.AuthorRepository;
@@ -27,10 +28,10 @@ public class Mutation implements GraphQLMutationResolver{
 	
 	public Book newBook(String title, String isbn, Integer pageCount, Long authorId) {
 		Book book = new Book();
+        book.setAuthor(new Author(authorId));
 		book.setTitle(title);
 		book.setIsbn(isbn);
         book.setPageCount(pageCount != null ? pageCount : 0);
-        book.setAuthor(new Author(authorId));
 
 		bookRepository.save(book);
 		return book;
@@ -48,6 +49,8 @@ public class Mutation implements GraphQLMutationResolver{
 		    b = book.get();
 			b.setPageCount(pageCount);
 			bookRepository.save(b);
+		}else {
+			throw new BookNotFoundException("The book to be updated was not found", id);
 		}
 		return b;
 	}

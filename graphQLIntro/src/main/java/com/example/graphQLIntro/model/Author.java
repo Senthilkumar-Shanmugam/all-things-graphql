@@ -16,12 +16,11 @@ public class Author {
 	
 	private String lastName;
 
-	public Author(Long authorId) {
+	public Author(Long id) {
         this.id = id;
-	}
+    }
 
 	public Author() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Author(String fname, String lname) {
